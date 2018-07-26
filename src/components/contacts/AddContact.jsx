@@ -54,7 +54,6 @@ class AddContact extends Component {
               <div className="card-body">
                 <form onSubmit={this.onHandleSubmit.bind(this, dispatch)}>
                   <TextInputField
-                    htmlFor="name"
                     label="Name:"
                     type="text"
                     name="name"
@@ -63,7 +62,6 @@ class AddContact extends Component {
                     onChange={this.onHandleChange}
                   />
                   <TextInputField
-                    htmlFor="email"
                     label="Email:"
                     type="email"
                     name="email"
@@ -72,7 +70,6 @@ class AddContact extends Component {
                     onChange={this.onHandleChange}
                   />
                   <TextInputField
-                    htmlFor="phone"
                     label="Phone:"
                     type="text"
                     name="phone"
