@@ -60,6 +60,7 @@ class AddContact extends Component {
       type: 'ADD_CONTACT',
       payload: newContact
     });
+    this.props.history.push('/');
 
     // Clear the state
     this.setState({
@@ -79,7 +80,7 @@ class AddContact extends Component {
           return (
             <div className="card mb-3">
               <div className="card-header">
-                <h1>Add Contacts</h1>
+                <h1>Add Contact</h1>
               </div>
               <div className="card-body">
                 <form onSubmit={this.onHandleSubmit.bind(this, dispatch)}>
