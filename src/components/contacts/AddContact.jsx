@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Consumer } from '../Context';
 import PropTypes from 'prop-types';
 import TextInputField from '../common/TextInputField';
-import uuid from 'uuid';
+import axios from 'axios';
 
 class AddContact extends Component {
   state = {
@@ -23,7 +23,7 @@ class AddContact extends Component {
     }
   };
 
-  onHandleSubmit = (dispatch, e) => {
+  onHandleSubmit = async (dispatch, e) => {
     e.preventDefault();
     const { name, email, phone } = this.state;
 
@@ -50,16 +50,17 @@ class AddContact extends Component {
     }
 
     const newContact = {
-      id: uuid(),
       name,
       email,
       phone
     };
-    // Context dispatch
-    dispatch({
-      type: 'ADD_CONTACT',
-      payload: newContact
-    });
+
+    const res = await axios.post(
+      'https://jsonplaceholder.typicode.com/users',
+      newContact
+    );
+    dispatch({ type: 'ADD_CONTACT', payload: res.data });
+
     this.props.history.push('/');
 
     // Clear the state
