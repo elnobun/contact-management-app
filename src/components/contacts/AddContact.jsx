@@ -8,25 +8,53 @@ class AddContact extends Component {
   state = {
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    errors: {}
   };
 
   onHandleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    // Clear the error field as user types.
+    if (!!this.state.errors[e.target.name]) {
+      let errors = Object.assign({}, this.state.errors);
+      delete errors[e.target.name];
+      this.setState({ [e.target.name]: e.target.value, errors });
+    } else {
+      this.setState({ [e.target.name]: e.target.value });
+    }
   };
 
   onHandleSubmit = (dispatch, e) => {
     e.preventDefault();
     const { name, email, phone } = this.state;
+
+    // Simple Form validation
+    if (name === '') {
+      this.setState({
+        errors: { name: 'Name field is required' }
+      });
+      return;
+    }
+
+    if (email === '') {
+      this.setState({
+        errors: { email: 'Email ield is required' }
+      });
+      return;
+    }
+
+    if (phone === '') {
+      this.setState({
+        errors: { phone: 'Field is required' }
+      });
+      return;
+    }
+
     const newContact = {
       id: uuid(),
       name,
       email,
       phone
     };
-
     // Context dispatch
     dispatch({
       type: 'ADD_CONTACT',
@@ -37,11 +65,13 @@ class AddContact extends Component {
     this.setState({
       name: '',
       email: '',
-      phone: ''
+      phone: '',
+      errors: {}
     });
   };
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone, errors } = this.state;
+    const isEnabled = name.length > 0 && email.length > 0 && phone.length > 0;
     return (
       <Consumer>
         {value => {
@@ -59,6 +89,7 @@ class AddContact extends Component {
                     placeholder="Enter Name..."
                     value={name}
                     onChange={this.onHandleChange}
+                    error={errors.name}
                   />
                   <TextInputField
                     label="Email:"
@@ -67,6 +98,7 @@ class AddContact extends Component {
                     placeholder="Enter email..."
                     value={email}
                     onChange={this.onHandleChange}
+                    error={errors.email}
                   />
                   <TextInputField
                     label="Phone:"
@@ -74,12 +106,15 @@ class AddContact extends Component {
                     placeholder="Enter Phone..."
                     value={phone}
                     onChange={this.onHandleChange}
+                    error={errors.phone}
                   />
-                  <input
+                  <button
+                    disabled={!isEnabled}
                     type="submit"
-                    value="Add Contact"
                     className="btn btn-primary btn-block"
-                  />
+                  >
+                    Add Contact
+                  </button>
                 </form>
               </div>
             </div>
