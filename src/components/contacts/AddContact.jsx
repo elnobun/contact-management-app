@@ -55,7 +55,6 @@ class AddContact extends Component {
                 <form onSubmit={this.onHandleSubmit.bind(this, dispatch)}>
                   <TextInputField
                     label="Name:"
-                    type="text"
                     name="name"
                     placeholder="Enter Name..."
                     value={name}
@@ -71,7 +70,6 @@ class AddContact extends Component {
                   />
                   <TextInputField
                     label="Phone:"
-                    type="text"
                     name="phone"
                     placeholder="Enter Phone..."
                     value={phone}

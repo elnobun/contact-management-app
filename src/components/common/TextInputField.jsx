@@ -33,4 +33,8 @@ TextInputField.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
+TextInputField.defaultProps = {
+  type: 'text'
+};
+
 export default TextInputField;
